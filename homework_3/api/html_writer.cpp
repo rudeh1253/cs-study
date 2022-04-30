@@ -1,3 +1,4 @@
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -67,6 +68,10 @@ void html_writer::AddImage(const std::string& img_path, float score, bool highli
     std::string file_name = ParseImageFileName(img_path);
     if (CheckExtension) {
         std::cout << "        <h2>" << file_name << "</h2>\n";
-        std::cout << "        <img src=\"" << img_path << " />";
+        std::cout << "        <img src=\"" << img_path << "\" />";
+        std::cout << "        <p>score = " << std::setprecision(2) << std::fixed << score << "</p>\n";
+    } else {
+        std::cerr << "        <h2>not supported extension: you need to use png or jpg</h2>\n";
     }
+    std::cout << "      </div>\n";
 }
