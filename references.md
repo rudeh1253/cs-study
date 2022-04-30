@@ -2,3 +2,4 @@
 [Cpp Core Guidelines](https://github.com/isocpp/CppCoreGuidelines)
 [Google Code Styleguide](https://google.github.io/styleguide/cppguide.html)
 [C++ Tutorial](http://www.cplusplus.com/doc/tutorial/)
+[GitLab: Agile Project Management](https://youtu.be/cVC8bcV8zsQ)
