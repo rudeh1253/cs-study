@@ -4,3 +4,8 @@
 [C++ Tutorial](http://www.cplusplus.com/doc/tutorial/)   
 [GitLab: Agile Project Management](https://youtu.be/cVC8bcV8zsQ)   
 [Bag of Visual Words - 5 Minutes with Cyrill](https://www.youtube.com/watch?v=a4cFONdc6nc)
+[Utility Library](https://en.cppreference.com/w/cpp/utility)   
+[Error handling](https://en.cppreference.com/w/cpp/error)   
+[IO Library](https://en.cppreference.com/w/cpp/io)   
+[Filesystem Library](https://en.cppreference.com/w/cpp/filesystem)   
+[Classes](https://en.cppreference.com/w/cpp/classes)   
