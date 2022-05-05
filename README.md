@@ -4,3 +4,6 @@ primarily from [MIT OCW](https://ocw.mit.edu/search/?d=Electrical%20Engineering%
 and from [OSSU](https://github.com/ossu/computer-science)
 and from a variety of sources.
 My courses is described in [Trello](https://trello.com/invite/b/m7VNUDNl/b986120d1a4d39a9d420dbb32bb92530/my-cs-curriculum)
+
+
+This branch is results for [Modern C++ for Computer Vision & Image Processing](https://www.youtube.com/watch?v=sZK6ouwREXA&list=PLgnQpQtFTOGRM59sr3nSL8BmeMZR9GCIA) lectures.
