@@ -10,3 +10,5 @@
 [Filesystem Library](https://en.cppreference.com/w/cpp/filesystem)   
 [Classes](https://en.cppreference.com/w/cpp/classes)   
 [Google C++ Testing, GTest, GMock Framework](https://www.youtube.com/watch?v=nbFXI9SDfbk)
+[Smart Pointers](https://www.youtube.com/watch?v=UOB7-B2MfwA)
+[Smart Pointers Deeper](https://youtu.be/xGDLkt-jBJ4)
