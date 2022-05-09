@@ -12,3 +12,4 @@
 [Google C++ Testing, GTest, GMock Framework](https://www.youtube.com/watch?v=nbFXI9SDfbk)
 [Smart Pointers](https://www.youtube.com/watch?v=UOB7-B2MfwA)
 [Smart Pointers Deeper](https://youtu.be/xGDLkt-jBJ4)
+[Template Normal Programming](https://www.youtube.com/watch?v=vwrXHznaYLA&t=0s)
