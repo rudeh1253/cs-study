@@ -21,38 +21,36 @@ int main(void) {
 
 template <int SIZE>
 int CountLongSubarrays(const array<int, SIZE>& arr) {
-    int numOfArrays = 0;
-    int lenOfLongest = 0;
-    int lenCache = 0;
-    int before = -1;
+    int num_of_subarrays = 0;
+    int len_of_longest = 1;
+    int len_cache = 0;
 
-    int tmpCount = 0;
+    int tmp = 0;
 
-    auto iter = arr.begin();
-    for (; iter != arr.end(); iter++) {
-        lenCache++;
-        if (*iter <= before) {
-            lenCache--;
-            if (lenCache == lenOfLongest) {
-                numOfArrays++;
-            } else if (lenCache > lenOfLongest) {
-                numOfArrays = 1;
-                lenOfLongest = lenCache;
+    for (auto iter = arr.begin(); iter != arr.end() - 1; iter++) {
+        len_cache++;
+
+        if (*iter >= *(iter + 1)) {
+            if (len_cache == len_of_longest) {
+                num_of_subarrays++;
+            } else if (len_cache > len_of_longest) {
+                len_of_longest = len_cache;
+                num_of_subarrays = 1;
             }
-            lenCache = 1;
-            before = -1;
-        } else {
-            before = *iter;
+            len_cache = 0;
         }
     }
-    if (*iter > before) {
-        if (lenCache == lenOfLongest) {
-            numOfArrays++;
-        } else if (lenCache > lenOfLongest) {
-            numOfArrays = 1;
-        }
+    if (*(arr.end() - 1) > *(arr.end() - 2)) {
+        len_cache++;
+    } else {
+        len_cache = 1;
     }
-    return numOfArrays;
+    if (len_cache == len_of_longest) {
+        num_of_subarrays++;
+    } else if (len_cache > len_of_longest) {
+        num_of_subarrays = 1;
+    }
+    return num_of_subarrays;
 }
 
 template <int SIZE>
