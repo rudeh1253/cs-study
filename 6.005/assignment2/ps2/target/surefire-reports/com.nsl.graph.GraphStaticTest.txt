@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.nsl.graph.GraphStaticTest
--------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in com.nsl.graph.GraphStaticTest
-testEmptyVerticesEmpty(com.nsl.graph.GraphStaticTest)  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.RuntimeException: not implemented
-	at com.nsl.graph.GraphStaticTest.testEmptyVerticesEmpty(GraphStaticTest.java:33)
-
