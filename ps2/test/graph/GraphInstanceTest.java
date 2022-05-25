@@ -68,7 +68,6 @@ public abstract class GraphInstanceTest {
     
     @Test
     public void testInitialVerticesEmpty() {
-        // TODO you may use, change, or remove this test
         assertEquals("expected new graph to have no vertices",
                 Collections.emptySet(), emptyInstance().vertices());
     }
@@ -78,19 +77,19 @@ public abstract class GraphInstanceTest {
     // "Tommy"
     @Test
     public void testAddMethod() {
-        Graph<String> testGraph = Graph.empty();
+        Graph<String> testGraph = emptyInstance();
         String[] testCases = { "Philip", "Tommy" };
-        testGraph.add(testCases[0]);
+        assertTrue(testGraph.add(testCases[0]));
         assertEquals("expected testGraph has one vertice", 1, testGraph.vertices().size());
-        testGraph.add(testCases[1]);
+        assertTrue(testGraph.add(testCases[1]));
         assertEquals("expected testGraph has two vertices", 2, testGraph.vertices().size());
-        testGraph.add(testCases[0]);
+        assertFalse(testGraph.add(testCases[0]));
         assertEquals("expected testGraph has two vertices", 2, testGraph.vertices().size());
     }
 
     @Test
     public void testSetAdd() {
-        Graph<String> testGraph = Graph.empty();
+        Graph<String> testGraph = emptyInstance();
         assertTrue(isEmptyGraph(testGraph));
 
         final int WEIGHT = 10;
@@ -108,18 +107,23 @@ public abstract class GraphInstanceTest {
         assertTrue(testGraph.targets(testLabels[0]).containsKey(testLabels[2]));
 
         // only target exists
-        testGraph.set(testLabels[3], testLabels[3], WEIGHT);
+        testGraph.set(testLabels[3], testLabels[2], WEIGHT);
         assertEquals(4, testGraph.vertices().size());
-        assertTrue(testGraph.targets(testLabels[3]).containsKey(testLabels[0]));
+        assertTrue(testGraph.targets(testLabels[3]).containsKey(testLabels[2]));
 
-        // source and target exists.
+        // both source and target exists.
         testGraph.set(testLabels[1], testLabels[2], WEIGHT);
         assertTrue(testGraph.targets(testLabels[1]).containsKey(testLabels[2]));
+        
+        // expected graph after a sort of procedure above is as follows:
+        // "Jimmy" → "Dustin"
+        //   ↓    ↙
+        // "Jack"  ← "Willy"
     }
 
     @Test
     public void testSetUpdate() {
-        Graph<String> testGraph = Graph.empty();
+        Graph<String> testGraph = emptyInstance();
         assertTrue(isEmptyGraph(testGraph));
         final String[] TEST_LABELS = {
             "George", "Mcggy", "Rick", "Sawyer"
@@ -133,12 +137,12 @@ public abstract class GraphInstanceTest {
         testGraph.set(TEST_LABELS[0], TEST_LABELS[1], ORIGINAL_WEIGHT);
         final int MODIFIED_WEIGHT = 20;
         int originalWeight = testGraph.set(TEST_LABELS[0], TEST_LABELS[1], MODIFIED_WEIGHT);
-        assertEquals(Integer.valueOf(originalWeight), Integer.valueOf(ORIGINAL_WEIGHT));
+        assertEquals(Integer.valueOf(ORIGINAL_WEIGHT), Integer.valueOf(originalWeight));
     }
 
     @Test
     public void testSetRemove() {
-        Graph<String> testGraph = Graph.empty();
+        Graph<String> testGraph = emptyInstance();
         assertTrue(isEmptyGraph(testGraph));
         final String[] TEST_LABELS = {
             "Phil", "Claire"
@@ -159,7 +163,7 @@ public abstract class GraphInstanceTest {
 
     @Test
     public void testRemove() {
-        Graph<String> testGraph = Graph.empty();
+        Graph<String> testGraph = emptyInstance();
         final String TEST_LABEL = "Haley";
         final String FAKE_LABEL = "Andy";
         testGraph.add(TEST_LABEL);
@@ -176,7 +180,7 @@ public abstract class GraphInstanceTest {
         final String[] TEST_CASES = {
             "Norman", "", "Marbin", "Kelly"
         };
-        Graph<String> testGraph = Graph.empty();
+        Graph<String> testGraph = emptyInstance();
         for (String label : TEST_CASES) {
             testGraph.add(label);
         }
@@ -188,7 +192,7 @@ public abstract class GraphInstanceTest {
 
     @Test
     public void testSources() {
-        final Graph<String> testGraph = Graph.empty();
+        final Graph<String> testGraph = emptyInstance();
         final String[] TEST_LABELS = {
             "Kevin", "Lily", "James", "Sam"
         };
@@ -212,7 +216,7 @@ public abstract class GraphInstanceTest {
     //     for a vertice with multiple incident edges.
     @Test
     public void testTargets() {
-        final Graph<String> testGraph = Graph.empty();
+        final Graph<String> testGraph = emptyInstance();
         final String[] TEST_LABELS = {
             "Yamamoto", "Akiyama", "Milly", "Cathey"
         };
@@ -223,11 +227,11 @@ public abstract class GraphInstanceTest {
 
         testGraph.set(TEST_CASES.get(0), TEST_CASES.get(1), COMMON_WEIGHT);
         assertEquals(1, testGraph.targets(TEST_CASES.get(0)).size());
-        assertTrue(testGraph.targets(TEST_CASES.get(0)).containsKey(TEST_CASES.get(0)));
+        assertTrue(testGraph.targets(TEST_CASES.get(0)).containsKey(TEST_CASES.get(1)));
 
         testGraph.set(TEST_CASES.get(0), TEST_CASES.get(2), COMMON_WEIGHT);
         assertEquals(2, testGraph.targets(TEST_CASES.get(0)).size());
-        assertTrue(testGraph.sources(TEST_CASES.get(0)).containsKey(TEST_CASES.get(1)));
-        assertTrue(testGraph.sources(TEST_CASES.get(0)).containsKey(TEST_CASES.get(2)));
+        assertTrue(testGraph.targets(TEST_CASES.get(0)).containsKey(TEST_CASES.get(1)));
+        assertTrue(testGraph.targets(TEST_CASES.get(0)).containsKey(TEST_CASES.get(2)));
     }
 }

@@ -5,6 +5,8 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +28,6 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     //   Every element in vertices represents a vertex containing specific
     //   value in a graph.
     //
-    //   In any graph, at least one vertex has to exist.
-    //
     //   (v1, v2) != (v2, v1) where (v1, v2) and (v2, v1) belong to E
     //   for some graph G = (V, E).
 
@@ -46,11 +46,13 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     //   for every e belongs to E, e.source belongs to V and e.target belongs to V.
     //
     //   for every element of vertices and edges, @NonNull
+    //
+    //   The graph is irreflexive.
 
     // Safety from rep exposure:
     //   All instance members declared private and final.
     //   Mutable objects never revealed(such as return the pointer to the objects)
-    //   to clients.
+    //   to clients. Only immutable objects are returned to the clients.
     
     /**
      * @brief constructor.
@@ -71,6 +73,11 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
         assert containsAllVertex();
     }
 
+    /**
+     * @breif check if any container contains null.
+     * @param container to check if it contains null.
+     * @return true if the container contains null, otherwise false.
+     */
     private <T> boolean containsNull(Collection<T> container) {
         for (T e : container) {
             if (e == null) { return true; }
@@ -80,7 +87,7 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
 
     private boolean containsAllVertex() {
         for (Edge<L> edge : edges) {
-            if (!(vertices.contains(edge.source()) || vertices.contains(edge.target()))) {
+            if (!(vertices.contains(edge.source()) && vertices.contains(edge.target()))) {
                 return false;
             }
         }
@@ -89,39 +96,90 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     
     @Override
     public boolean add(L vertex) {
-        return this.vertices.add(vertex);
+        boolean result = this.vertices.add(vertex);
+        checkRep();
+        return result;
     }
     
     @Override
     public int set(L source, L target, int weight) {
-        vertices.add(source); vertices.add(target);
-        Edge<L> newEdge = new Edge<>(source, target, weight);
-        if (this.edges.contains(newEdge)) {
-            edges.add(newEdge);
-            return 0;
+        int returnValue = weight != 0 ? updateEdge(source, target, weight) : removeEdge(source, target);
+        checkRep();
+        return returnValue;
+    }
+
+    private int removeEdge(L source, L target) {
+        Set<L> verticesSet = this.vertices();
+        if (verticesSet.contains(source) && verticesSet.contains(target)) {
+            Map<L, Integer> targets = this.targets(source);
+            if (targets.isEmpty() || !targets.containsKey(target)) {
+                return 0;
+            } else {
+                int idxToRemove = this.edges.indexOf(new Edge<L>(source, target, 1));
+                int returnWeight = this.edges.get(idxToRemove).weight();
+                this.edges.remove(idxToRemove);
+                return returnWeight;
+            }
         } else {
-            
+            return 0;
         }
+    }
+
+    private int updateEdge(L source, L target, int weight) {
+        vertices.add(source);
+        vertices.add(target);
+
+        Edge<L> newEdge = new Edge<>(source, target, weight);
+        int returnValue;
+        if (this.edges.contains(newEdge)) {
+            final int idx = this.edges.indexOf(newEdge);
+            returnValue = this.edges.get(idx).weight();
+
+            this.edges.remove(idx);
+            this.edges.add(newEdge);
+            
+        } else {
+            edges.add(newEdge);
+            returnValue = 0;
+        }
+        return returnValue;
     }
     
     @Override
     public boolean remove(L vertex) {
-        throw new RuntimeException("not implemented");
+        return this.vertices.remove(vertex);
     }
     
     @Override
     public Set<L> vertices() {
-        throw new RuntimeException("not implemented");
+        return Collections.unmodifiableSet(this.vertices);
     }
     
     @Override
     public Map<L, Integer> sources(L target) {
-        throw new RuntimeException("not implemented");
+        // Edge<L> is an immutable type. So returning a map object containing
+        // Edge<L> objects is safe from rep exposure.
+        // sourceContainer does not have to be an immutable type. Its mutability does not
+        // violate rep independence.
+        Map<L, Integer> sourcesContainer = new HashMap<>();
+        for (Edge<L> edge : this.edges) {
+            if (edge.target().equals(target)) {
+                sourcesContainer.put(edge.source(), edge.weight());
+            }
+        }
+        return sourcesContainer;
     }
     
     @Override
     public Map<L, Integer> targets(L source) {
-        throw new RuntimeException("not implemented");
+        // Argument about rep indepence is same as the argument in sources method.
+        Map<L, Integer> targetsContainer = new HashMap<>();
+        for (Edge<L> edge : this.edges) {
+            if (edge.source().equals(source)) {
+                targetsContainer.put(edge.target(), edge.weight());
+            }
+        }
+        return targetsContainer;
     }
     
     /**
@@ -143,11 +201,10 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     public String toString() {
         final StringBuilder verticeBuilder = new StringBuilder();
         for (L vertex : this.vertices) {
-            verticeBuilder.append(vertex)
-              .append(", ");
+            verticeBuilder.append(vertex).append(", ");
         }
         final String VERTICES_STR = verticeBuilder.length() != 0 ?
-                                    "{ " + verticeBuilder.substring(0, verticeBuilder.length() - 2) + " }\n" :
+                                    "{ " + verticeBuilder.substring(0, verticeBuilder.length() - 2) + " }" :
                                     "{ }";
 
         final StringBuilder edgesBuilder = new StringBuilder();
@@ -180,6 +237,7 @@ class Edge<L> {
     // Representation invariant:
     //   source != null && target != null.
     //   weight != 0
+    //   L must be treated as an immutable type.
     // Safety from rep exposure:
     //   Every data declared as private, final, so that they are immutable.
     
@@ -201,14 +259,21 @@ class Edge<L> {
      * 
      * @return source.
      */
-    public String source() { return null; } // TODO
+    public L source() { return this.SOURCE; }
 
     /**
      * Get target of the edge.
      * 
      * @return target.
      */
-    public String target() { return null; } // TODO
+    public L target() { return this.TARGET; }
+
+    /**
+     * Get weight of the edge.
+     * 
+     * @return weight.
+     */
+    public int weight() { return this.WEIGHT; }
     
     /**
      * Express this object as a string.
@@ -229,14 +294,26 @@ class Edge<L> {
         return sb.toString();
     }
 
+    /**
+     * Determine whether two object is equivalent.
+     * E: O1 x O2 -> Boolean
+     * @param obj compared to this.
+     * @return true if this and obj is equal based on abstracion function, otherwise, false.
+     *         When obj is null, or obj is not instance of Edge<L>, also return false.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) { return false; }
-        return this.toString().equals(obj.toString());
+
+        Edge<L> that;
+        if (obj instanceof Edge) { 
+            that = (Edge<L>)obj;
+        } else { return false; }
+        return (this.SOURCE.equals(that.source()) && this.TARGET.equals(that.target()));
     }
 
     @Override
     public int hashCode() {
-        return this.WEIGHT;
+        return this.SOURCE.hashCode() + this.TARGET.hashCode();
     }
 }
