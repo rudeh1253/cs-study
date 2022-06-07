@@ -4,3 +4,5 @@
 *.i
 .vscode
 lib
+TestMain.java
+*.class
