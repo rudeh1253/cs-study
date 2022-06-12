@@ -109,7 +109,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
         for (T vertex : vertices) {
             sb.append(vertex).append(", ");
         }
-        return sb.isEmpty() ?
+        return sb.length() == 0 ?
                "{ }" :
                "{ " + sb.substring(0, sb.length() - 2) + " }";
     }
@@ -163,6 +163,20 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
         final String LABEL = "Picasso";
         Vertex<String> vertex = new Vertex<>(LABEL);
         assertEquals(LABEL, vertex.getValue());
+    }
+
+    @Test
+    public void testEquals() {
+        final String LABEL = "Japan";
+        Vertex<String> vertex = new Vertex<>(LABEL);
+        
+        Vertex<String> v1 = new Vertex<>("Com");
+        Vertex<String> v2 = new Vertex<>("Nir");
+
+        vertex.addSource(v1, 13);
+        vertex.addTarget(v2, 15);
+
+        assertEquals(new Vertex<>(LABEL), vertex);
     }
 
     // Test strategy:

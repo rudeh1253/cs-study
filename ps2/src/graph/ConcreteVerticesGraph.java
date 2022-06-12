@@ -191,7 +191,7 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
         for (L vertex : this.vertices()) {
             sb.append(vertex).append(", ");
         }
-        return sb.isEmpty() ?
+        return sb.length() == 0 ?
                "{ }" :
                "{ " + sb.substring(0, sb.length() - 2) + " }";
     }

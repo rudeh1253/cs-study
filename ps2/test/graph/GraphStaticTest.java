@@ -28,7 +28,7 @@ public class GraphStaticTest {
     }
     
     @Test
-    public void testEmptyVerticesEmpty() {
+    public void testEmptyVerticesIsEmpty() {
         assertEquals("expected empty() graph to have no vertices",
                 Collections.emptySet(), Graph.empty().vertices());
     }
