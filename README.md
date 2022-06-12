@@ -4,3 +4,8 @@ primarily from [MIT OCW](https://ocw.mit.edu/search/?d=Electrical%20Engineering%
 and from [OSSU](https://github.com/ossu/computer-science)
 and from a variety of sources.
 My courses is described in [Trello](https://trello.com/invite/b/m7VNUDNl/b986120d1a4d39a9d420dbb32bb92530/my-cs-curriculum)
+
+[6.01](https://github.com/rudeh1253/cs-study/tree/6.01)
+[6.005](https://github.com/rudeh1253/cs-study/tree/6.005)
+[6.006](https://github.com/rudeh1253/cs-study/tree/6.006)
+[moderncpp](https://github.com/rudeh1253/cs-study/tree/moderncpp)
