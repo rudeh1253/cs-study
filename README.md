@@ -5,7 +5,8 @@ and from [OSSU](https://github.com/ossu/computer-science)
 and from a variety of sources.
 My courses is described in [Trello](https://trello.com/invite/b/m7VNUDNl/b986120d1a4d39a9d420dbb32bb92530/my-cs-curriculum)
 
-[6.01](https://github.com/rudeh1253/cs-study/tree/6.01)<br>
-[6.005](https://github.com/rudeh1253/cs-study/tree/6.005)<br>
-[6.006](https://github.com/rudeh1253/cs-study/tree/6.006)<br>
+[6.01: INTRODUCTION TO ELECTRICAL ENGINEERING AND COMPUTER SCIENCE I](https://github.com/rudeh1253/cs-study/tree/6.01)<br>
+[6.005: SOFTWARE CONSTRUCTION](https://github.com/rudeh1253/cs-study/tree/6.005)<br>
+[6.006: Introduction to Algorithms](https://github.com/rudeh1253/cs-study/tree/6.006)<br>
 [moderncpp](https://github.com/rudeh1253/cs-study/tree/moderncpp)<br>
+[Node.js](https://github.com/rudeh1253/simplewebsite)<br>
